@@ -7,6 +7,9 @@ import (
 
 
 func path1(w http.ResponseWriter, r *http.Request){
+	
+	fmt.Println("Method: ",r.Method," | Proto: ", r.Proto)
+	fmt.Println("Host : ", r.Host)
 	fmt.Fprint(w,"<h1>Welcome to the server</h1>")
 }
 
