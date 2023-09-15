@@ -1,0 +1,23 @@
+<h1> 
+
+	Name: {{if eq .Name "John Smith"}}
+		John Smilga
+	      {{else}}
+	      	<p>{{.Name}}</p>
+		{{end}}
+</h1>
+
+<h1> ID: {{.Userid}}</h1>
+
+<h1> 
+
+test: 
+	<ul>
+		{{range .Test}}
+		<li>{{.}}</li>
+		{{end}}
+	</ul>
+</h1>
+
+<h1> logical And : {{and true true}}</h1>
+
