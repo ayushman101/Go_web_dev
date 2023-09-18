@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"html/template"
+	
 	"log"
+	"githum.com/ayushman101/Go_web_dev/views"
 )
 func logHttpHeader(r *http.Request){
 
@@ -15,24 +16,15 @@ func logHttpHeader(r *http.Request){
 }
 
 func TemplateExecute(w http.ResponseWriter, filepath string, data any){
-
-	tpl,err:=template.ParseFiles(filepath)
+	
+	tpl,err:=views.Parse(filepath)
 	if err!=nil{
 	
 		http.Error(w,"Failed to parse response html", http.StatusInternalServerError)
 		log.Fatal(err)
 		return
 	}
-
-	err = tpl.Execute(w,data)
-
-	if err!=nil{
-
-		http.Error(w,"Failed to parse response html", http.StatusInternalServerError)
-		log.Fatal(err)
-		return
-	}
-
+	tpl.Execute(w,data)
 
 }
 
