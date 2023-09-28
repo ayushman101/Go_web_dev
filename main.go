@@ -9,6 +9,7 @@ import (
 	"log"
 	"githum.com/ayushman101/Go_web_dev/views"
 	"githum.com/ayushman101/Go_web_dev/controllers"
+	"githum.com/ayushman101/Go_web_dev/templates"
 )
 
 func logHttpHeader(r *http.Request){
@@ -70,7 +71,7 @@ func main(){
 
 	r:=chi.NewRouter()
 	
-	tpl,err:= views.Parse("./templates/home.gohtml")
+	tpl,err:= views.ParseFS( templates.FS, "home.gohtml")
 	if err!=nil{
 		panic(err)
 	}
@@ -78,7 +79,7 @@ func main(){
 	r.Use(middleware.Logger)
 	r.Get("/",controllers.StaticHandler(tpl))
 	
-	tpl,err = views.Parse("./templates/newpage.gohtml")
+	tpl,err = views.ParseFS(templates.FS, "newpage.gohtml")
 	if err!=nil{
 		panic(err)
 	}

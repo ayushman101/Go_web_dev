@@ -5,7 +5,23 @@ import (
 	"html/template"
 	"net/http"
 	"fmt"
+	"io/fs"
 )
+
+
+
+func ParseFS (filesystem fs.FS, pattern string ) (Template, error) {
+
+	tpl, err:= template.ParseFS(filesystem, pattern)
+
+	if err!=nil {
+		return Template{}, fmt.Errorf("Parsing Template error %w ", err)
+	}
+
+	return Template{
+		htmlTpl: tpl,
+	},nil
+}
 
 
 func Parse (filepath string) (Template,error){
