@@ -8,7 +8,9 @@ import (
 	
 	"log"
 	"githum.com/ayushman101/Go_web_dev/views"
+	"githum.com/ayushman101/Go_web_dev/controllers"
 )
+
 func logHttpHeader(r *http.Request){
 
 	fmt.Println("Method: ",r.Method," | Proto: ", r.Proto)
@@ -26,21 +28,6 @@ func TemplateExecute(w http.ResponseWriter, filepath string, data any){
 	}
 	tpl.Execute(w,data)
 
-}
-
-func path1(w http.ResponseWriter, r *http.Request){
-	logHttpHeader(r)	
-	TemplateExecute(w,"./templates/home.gohtml",nil)
-	//fmt.Fprint(w,"<h1>Welcome to the server</h1>")
-}
-
-func path2(w http.ResponseWriter, r *http.Request){
-	logHttpHeader(r)
-	w.Header().Set("Content-Type","text/html; charset=utf-8")
-	
-	TemplateExecute(w,"./templates/newpage.gohtml",nil)
-
-	//fmt.Fprint(w,"<h1>New Page 2</h1>")
 }
 
 
@@ -82,14 +69,30 @@ func NotFoundPath(w http.ResponseWriter, r *http.Request){
 func main(){
 
 	r:=chi.NewRouter()
+	
+	tpl,err:= views.Parse("./templates/home.gohtml")
+	if err!=nil{
+		panic(err)
+	}
 
 	r.Use(middleware.Logger)
-	r.Get("/", path1)
-	r.Get("/new-page",path2)
+	r.Get("/",controllers.StaticHandler(tpl))
+	
+	tpl,err = views.Parse("./templates/newpage.gohtml")
+	if err!=nil{
+		panic(err)
+	}
+
+
+
+	r.Get("/new-page",controllers.StaticHandler(tpl))
+
 	r.Get("/users/{userID}",userPath)
+	
 	r.NotFound(NotFoundPath)
 
 	fmt.Println("The server is starting on port 3000")
+	
 	http.ListenAndServe(":3000",r)
 	
 }
