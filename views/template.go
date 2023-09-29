@@ -10,9 +10,9 @@ import (
 
 
 
-func ParseFS (filesystem fs.FS, pattern string ) (Template, error) {
+func ParseFS (filesystem fs.FS, patterns ...string) (Template, error) {
 
-	tpl, err:= template.ParseFS(filesystem, pattern)
+	tpl, err:= template.ParseFS(filesystem, patterns...)
 
 	if err!=nil {
 		return Template{}, fmt.Errorf("Parsing Template error %w ", err)

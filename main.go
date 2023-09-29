@@ -33,32 +33,13 @@ func TemplateExecute(w http.ResponseWriter, filepath string, data any){
 
 
 func userPath(w http.ResponseWriter, r *http.Request){
-	logHttpHeader(r)
-	userID:=chi.URLParam(r,"userID")
 
-	ctx := r.Context()
-  	key := ctx.Value("userID")
+	tpl,err:= views.ParseFS(templates.FS,"layout.gohtml","user.gohtml")
+	if err!=nil{
+		panic(err)
+	}
 
-  // respond to the client
-  //w.Write([]byte(fmt.Sprintf("hi %v, %v", userID, key)))
-	
-  user:=struct{
-	Name string
-	Userid any
-	Key any
-	Test []string
-  }{
-	Name: "John Smith",
-	Userid: userID,
-	Key: key,
-	Test: []string{
-		"red",
-		"yellow",
-	},
-  }
-
-  	TemplateExecute(w,"./templates/user.gohtml",user)
-  	//fmt.Fprint(w,"<h1>User: ", userID,"</h1> <h2> Key: ",key," </h2>")
+	controllers.Userpage(tpl,w,r)
 	
 }
 
@@ -71,22 +52,22 @@ func main(){
 
 	r:=chi.NewRouter()
 	
-	tpl,err:= views.ParseFS( templates.FS, "home.gohtml")
+	tpl,err:= views.ParseFS( templates.FS, "layout.gohtml","home.gohtml")
 	if err!=nil{
 		panic(err)
 	}
 
 	r.Use(middleware.Logger)
-	r.Get("/",controllers.StaticHandler(tpl))
+	r.Get("/",controllers.StaticHandler(tpl,nil))
 	
-	tpl,err = views.ParseFS(templates.FS, "newpage.gohtml")
+	tpl,err = views.ParseFS(templates.FS, "layout.gohtml","newpage.gohtml")
 	if err!=nil{
 		panic(err)
 	}
 
 
 
-	r.Get("/new-page",controllers.StaticHandler(tpl))
+	r.Get("/new-page",controllers.StaticHandler(tpl,nil))
 
 	r.Get("/users/{userID}",userPath)
 	
