@@ -6,7 +6,35 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class= " text-green-500 ">
+<body>
+
+<header class ="bg-gradient-to-r from-blue-500 to-indigo-700">
+	<nav class="px-8 py-6 flex items-center">
+		
+		<div class="text-4xl pr-12 font-serif">
+			LensEye
+		</div>
+		<div class="flex-grow">
+
+		<a class= "text-lg font-semibold hover:text-blue-100 pr-8" href="/">
+			Home
+		</a>
+
+		<a  class= "text-lg font-semibold hover:text-blue-100 pr-8" href="/new-page">
+			New-Page
+		</a>
+
+		<a  class= "text-lg font-semibold hover:text-blue-100 pr-8" href="#">
+			User-Page
+		</a>
+		</div>
+
+		<div>
+			<a href="#" class="pr-4 hover:text-blue-100 "> Sign In</a>
+			<a href="#" class="py-2 px-4 bg-blue-700 hover:bg-blue-500 rounded"> Sign Up</a>
+		</div>
+	</nav>
+</header>
 
 {{template "page" .}}
 
