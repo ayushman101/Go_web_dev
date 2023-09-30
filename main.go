@@ -71,6 +71,13 @@ func main(){
 
 	r.Get("/users/{userID}",userPath)
 	
+	tpl,err= views.ParseFS(templates.FS, "layout.gohtml", "signup.gohtml")
+	if err!=nil {
+		panic(err)
+	}
+
+	r.Get("/signup",controllers.StaticHandler(tpl,nil))
+
 	r.NotFound(NotFoundPath)
 
 	fmt.Println("The server is starting on port 3000")

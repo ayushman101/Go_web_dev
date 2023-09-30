@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body>
-
 <header class ="bg-gradient-to-r from-blue-500 to-indigo-700">
 	<nav class="px-8 py-6 flex items-center">
 		
@@ -31,13 +28,17 @@
 
 		<div>
 			<a href="#" class="pr-4 hover:text-blue-100 "> Sign In</a>
-			<a href="#" class="py-2 px-4 bg-blue-500 hover:bg-blue-200 rounded"> Sign Up</a>
+			<a href="/signup" class="py-2 px-4 bg-blue-500 hover:bg-blue-200 rounded"> Sign Up</a>
 		</div>
 	</nav>
 </header>
 
+
+<body class="min-h-screen bg-grey-100">
+
 {{template "page" .}}
 
+<body>
 
 <footer class=" bg-gradient-to-r from-blue-500 to-indigo-700 items-center">
 	<nav class="px-8 py-6 flex items-center justify-center">
@@ -58,6 +59,5 @@
 <nav>
 </footer>
 
-<body>
 
 </html>
