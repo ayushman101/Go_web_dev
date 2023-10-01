@@ -71,12 +71,16 @@ func main(){
 
 	r.Get("/users/{userID}",userPath)
 	
-	tpl,err= views.ParseFS(templates.FS, "layout.gohtml", "signup.gohtml")
+	UserC:= controllers.User{}
+
+	UserC.Template.New,err= views.ParseFS(templates.FS, "layout.gohtml", "signup.gohtml")
+	
 	if err!=nil {
 		panic(err)
 	}
 
-	r.Get("/signup",controllers.StaticHandler(tpl,nil))
+
+	r.Get("/signup",UserC.New)
 
 	r.NotFound(NotFoundPath)
 
